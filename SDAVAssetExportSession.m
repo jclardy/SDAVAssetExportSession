@@ -232,13 +232,19 @@
                 handled = YES;
                 error = YES;
             }
-            
-            if (!handled && self.videoOutput == output)
-            {
-                // update the video progress
+		
+		
+	    if (!handled)
+	    {
+		// update the video progress
                 lastSamplePresentationTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
                 lastSamplePresentationTime = CMTimeSubtract(lastSamplePresentationTime, self.timeRange.start);
                 self.progress = duration == 0 ? 1 : CMTimeGetSeconds(lastSamplePresentationTime) / duration;
+	    }
+            
+            if (!handled && self.videoOutput == output)
+            {
+
 
                 if ([self.delegate respondsToSelector:@selector(exportSession:renderFrame:withPresentationTime:toBuffer:)])
                 {
